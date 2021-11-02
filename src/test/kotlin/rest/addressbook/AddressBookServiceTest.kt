@@ -266,13 +266,13 @@ class AddressBookServiceTest {
         // complete the test to ensure that it is idempotent but not safe
         //////////////////////////////////////////////////////////////////////
         // Check that DELETE is not SAFE
-        val response = restTemplate.execute("http://localhost:$port/contacts/person/1", HttpMethod.DELETE, {},
+        val response = restTemplate.execute(juanURI, HttpMethod.DELETE, {},
                             { assertEquals(204, it.statusCode.value()) })
-        assertEquals(0, addressBook.personList.size)
+        assertEquals(1, addressBook.personList.size)
         // Check that DELETE is idempotent
-        val secondResponse = restTemplate.execute("http://localhost:$port/contacts/person/1", HttpMethod.DELETE, {},
+        val secondResponse = restTemplate.execute(juanURI, HttpMethod.DELETE, {},
             { assertEquals(204, it.statusCode.value()) })
-        assertEquals(0, addressBook.personList.size)
+        assertEquals(1, addressBook.personList.size)
         assertEquals(response,secondResponse)
 
     }
